@@ -1,0 +1,60 @@
+package org.ifolks.commons.mapper.impl;
+
+import java.io.Serializable;
+
+import javax.inject.Inject;
+
+import org.ifolks.commons.api.model.FullView;
+import org.ifolks.commons.mapper.interfaces.Mapper;
+import org.ifolks.commons.model.interfaces.Entity;
+
+
+
+/**
+ * This {@link Mapper} implementation is adapted to {@link FullView}
+ * 
+ * @author Nicolas Thibault
+ *
+ * @param <T> FullView<U, W> associated to the entity
+ * @param <U> id of the full view and entity
+ * @param <V> form associated to the entity
+ * @param <W> Entity
+ */
+public class FullViewMapper<T extends FullView<U, V>, U extends Serializable, V extends Serializable, W extends Entity<U>> extends BasicMapperImpl<T, W> {
+	
+	public FullViewMapper(Class<T> clazz1, Class<W> clazz2) {
+		super(clazz1, clazz2);
+	}
+	
+	@Inject
+	private AbstractMapper<V, W> formMapper;
+	
+		
+	public AbstractMapper<V, W> getFormMapper() {
+		return formMapper;
+	}
+	public void setFormMapper(AbstractMapper<V, W> formMapper) {
+		this.formMapper = formMapper;
+	}
+	
+	
+
+	@Override
+	public T mapFrom(T obj1, W obj2) {		
+		
+		obj1.setId(obj2.getId());
+		
+		obj1.setForm(formMapper.mapFrom(obj2));
+				
+		return obj1;
+	}	
+	
+
+	@Override
+	public W mapTo(T obj1, W obj2) {
+		
+		obj2 = formMapper.mapTo(obj1.getForm(), obj2);
+		
+		return obj2;
+	}
+}
