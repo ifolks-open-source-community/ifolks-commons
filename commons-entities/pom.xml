@@ -33,10 +33,10 @@
 		</dependency>
 		
 		
-		<!-- Inject annotation -->
+		<!-- Spring Beans for Autowired -->
 		<dependency>
-			<groupId>javax.inject</groupId>
-			<artifactId>javax.inject</artifactId>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
 		</dependency>
 		
 		

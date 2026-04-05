@@ -4,10 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.ifolks.commons.api.exception.repository.ObjectNotFoundException;
 import org.ifolks.commons.api.model.OrderType;
 import org.ifolks.commons.model.interfaces.Entity;
@@ -22,7 +21,7 @@ public abstract class BaseDaoImpl<T extends Entity<U>, U extends Serializable> i
 	/*
 	 * resources injected with spring
 	 */
-	@Inject
+	@Autowired
 	protected SessionFactory sessionFactory;
 
 	public SessionFactory getSessionFactory() {

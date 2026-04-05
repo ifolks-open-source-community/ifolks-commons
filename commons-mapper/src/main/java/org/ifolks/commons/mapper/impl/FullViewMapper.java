@@ -2,9 +2,8 @@ package org.ifolks.commons.mapper.impl;
 
 import java.io.Serializable;
 
-import javax.inject.Inject;
-
 import org.ifolks.commons.api.model.FullView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.ifolks.commons.mapper.interfaces.Mapper;
 import org.ifolks.commons.model.interfaces.Entity;
 
@@ -26,7 +25,7 @@ public class FullViewMapper<T extends FullView<U, V>, U extends Serializable, V 
 		super(clazz1, clazz2);
 	}
 	
-	@Inject
+	@Autowired
 	private AbstractMapper<V, W> formMapper;
 	
 		
