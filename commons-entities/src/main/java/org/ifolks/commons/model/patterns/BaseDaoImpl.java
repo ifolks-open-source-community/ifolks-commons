@@ -4,13 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.ifolks.commons.api.exception.repository.ObjectNotFoundException;
 import org.ifolks.commons.api.model.OrderType;
 import org.ifolks.commons.model.interfaces.Entity;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Order;
@@ -21,15 +20,10 @@ public abstract class BaseDaoImpl<T extends Entity<U>, U extends Serializable> i
 	/*
 	 * resources injected with spring
 	 */
-	@Autowired
-	protected SessionFactory sessionFactory;
+	@PersistenceContext
+	protected EntityManager entityManager;
 
-	public SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
+
 	
 	private Class<T> clazz;
 	
@@ -47,12 +41,11 @@ public abstract class BaseDaoImpl<T extends Entity<U>, U extends Serializable> i
 	 */
 	@Override
 	public Long count() {
-		Session session = this.sessionFactory.getCurrentSession();
-		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
 		Root<T> root = criteria.from(clazz);
 		criteria.select(builder.count(root));		 
-		return session.createQuery(criteria).getSingleResult();
+		return entityManager.createQuery(criteria).getSingleResult();
 	}
 
 	/**
@@ -60,15 +53,14 @@ public abstract class BaseDaoImpl<T extends Entity<U>, U extends Serializable> i
 	 */
 	@Override
 	public List<T> loadList() {
-		Session session = this.sessionFactory.getCurrentSession();
-		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<T> criteria = builder.createQuery(clazz);
 		Root<T> root = criteria.from(clazz);
 		criteria.select(root);
 		List<Order> orders = new ArrayList<>();
 		JpaCriteriaUtils.addOrder(builder, orders, root.get("id"), OrderType.DESC);
 		criteria.orderBy(orders);
-		return session.createQuery(criteria).getResultList();
+		return entityManager.createQuery(criteria).getResultList();
 	}
 
 	/**
@@ -95,16 +87,16 @@ public abstract class BaseDaoImpl<T extends Entity<U>, U extends Serializable> i
 	 */
 	@Override
 	public T get(U id) {
-		return this.sessionFactory.getCurrentSession().get(clazz, id);
+		return entityManager.find(clazz, id);
 	}
 
 	/**
 	 * save object
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public U save(T obj) {
-		return (U) this.sessionFactory.getCurrentSession().save(obj);
+		entityManager.persist(obj);
+		return obj.getId();
 	}
 
 	/**
@@ -112,7 +104,7 @@ public abstract class BaseDaoImpl<T extends Entity<U>, U extends Serializable> i
 	 */
 	@Override
 	public void delete(T obj) {
-		this.sessionFactory.getCurrentSession().delete(obj);
+		this.entityManager.remove(obj);
 	}
 
 	/**
@@ -120,15 +112,15 @@ public abstract class BaseDaoImpl<T extends Entity<U>, U extends Serializable> i
 	 */
 	@Override
 	public void flush() {
-		sessionFactory.getCurrentSession().flush();
+		entityManager.flush();
 	}
 
 	/**
 	 * evict obj
 	 */
 	@Override
-	public void evict(T obj) {
-		sessionFactory.getCurrentSession().evict(obj);
+	public void detach(T obj) {
+		entityManager.detach(obj);
 	}
 
 	/**
@@ -136,6 +128,6 @@ public abstract class BaseDaoImpl<T extends Entity<U>, U extends Serializable> i
 	 */
 	@Override
 	public void clear() {
-		sessionFactory.getCurrentSession().clear();
+		entityManager.clear();
 	}
 }

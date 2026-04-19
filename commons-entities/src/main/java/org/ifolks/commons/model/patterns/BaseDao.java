@@ -50,7 +50,7 @@ public interface BaseDao<T extends Entity<U>, U extends Serializable> {
 	/**
 	 * evict obj
 	 */
-	void evict(T obj);
+	void detach(T obj);
 
 	/**
 	 * clear
