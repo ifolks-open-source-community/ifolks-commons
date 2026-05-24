@@ -16,7 +16,7 @@ public class AccessLoggerTest {
 	@BeforeClass
 	public static void setUpBeforeClass() {
 		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.setSerializationInclusion(Include.NON_NULL);
+		objectMapper.setDefaultPropertyInclusion(Include.NON_NULL);
 		logger = new AccessLogger(new JsonSerializer(objectMapper));
 	}
 	

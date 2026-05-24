@@ -38,7 +38,7 @@ public class JwtDecoder<T extends JsonWebToken<H, B>, H, B> implements TokenDeco
 	public T decode(String token) {
 		String[] parts = token.split("\\.");
 		try {
-			T result = tokenClass.newInstance();		
+			T result = tokenClass.getDeclaredConstructor().newInstance();		
 			result.setHeader(objectMapper.readValue(Base64.decodeBase64(parts[0]), headerClass));
 			result.setBody(objectMapper.readValue(Base64.decodeBase64(parts[1]), bodyClass));
 			result.setSignature(Base64.decodeBase64(parts[2]));

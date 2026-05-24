@@ -47,10 +47,10 @@ public class ErrorReportHandler implements ResponseErrorHandler {
 	
 	/*
 	 * (non-Javadoc)
-	 * @see org.springframework.web.client.ResponseErrorHandler#handleError(org.springframework.http.client.ClientHttpResponse)
+	 * @see org.springframework.web.client.ResponseErrorHandler#handleError(java.net.URI, org.springframework.http.HttpMethod, org.springframework.http.client.ClientHttpResponse)
 	 */
 	@Override
-	public void handleError(ClientHttpResponse response) throws IOException {
+	public void handleError(java.net.URI url, org.springframework.http.HttpMethod method, ClientHttpResponse response) throws IOException {
 
 		try {
 			ErrorReport errorReport = objectMapper.readValue(response.getBody(), ErrorReport.class);
@@ -71,7 +71,7 @@ public class ErrorReportHandler implements ResponseErrorHandler {
 		ApplicationException exception;
 		
 		try {
-			exception = (ApplicationException) Class.forName(errorReport.getExceptionClassName()).newInstance();
+			exception = (ApplicationException) Class.forName(errorReport.getExceptionClassName()).getDeclaredConstructor().newInstance();
 			exception.setMessage(errorReport.getMessage());
 			
 		} catch (Exception e) {
