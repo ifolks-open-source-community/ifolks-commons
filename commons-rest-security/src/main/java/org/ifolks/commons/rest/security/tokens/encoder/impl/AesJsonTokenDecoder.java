@@ -4,7 +4,7 @@ import org.ifolks.commons.crypto.accessors.AesKeyAccessor;
 import org.ifolks.commons.crypto.encoding.AesJsonObjectEncoder;
 import org.ifolks.commons.rest.security.tokens.encoder.TokenEncoder;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * imlementation of a {@link TokenEncoder} that uses an {@link AesJsonObjectEncoder}
@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class AesJsonTokenDecoder<T> extends CryptedTokenDecoder<T> {	
 	
-	public AesJsonTokenDecoder(ObjectMapper objectMapper, AesKeyAccessor keyAccessor, Class<T> tokenClass) {	
-		super(new AesJsonObjectEncoder(objectMapper, keyAccessor), tokenClass);
+	public AesJsonTokenDecoder(JsonMapper jsonMapper, AesKeyAccessor keyAccessor, Class<T> tokenClass) {	
+		super(new AesJsonObjectEncoder(jsonMapper, keyAccessor), tokenClass);
 	}
 }

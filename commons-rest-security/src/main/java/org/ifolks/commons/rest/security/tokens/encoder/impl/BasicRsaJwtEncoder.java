@@ -4,7 +4,7 @@ import org.ifolks.commons.crypto.signature.RsaAlgorithms;
 import org.ifolks.commons.crypto.signature.RsaSigner;
 import org.ifolks.commons.rest.security.tokens.jwt.BasicRsaJsonWebToken;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * 
@@ -17,8 +17,8 @@ public class BasicRsaJwtEncoder extends JwtEncoder<BasicRsaJsonWebToken> {
 	private String keyId;
 	
 	
-	public BasicRsaJwtEncoder(ObjectMapper objectMapper, RsaSigner rsaSigner, String algorithm, String keyId) {
-		super(objectMapper);
+	public BasicRsaJwtEncoder(JsonMapper jsonMapper, RsaSigner rsaSigner, String algorithm, String keyId) {
+		super(jsonMapper);
 		this.rsaSigner = rsaSigner;
 		this.algorithm = RsaAlgorithms.valueOf(algorithm);
 		this.keyId = keyId;

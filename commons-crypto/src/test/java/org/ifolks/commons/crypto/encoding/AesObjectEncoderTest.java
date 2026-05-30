@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 public class AesObjectEncoderTest {
 	
@@ -18,7 +18,7 @@ public class AesObjectEncoderTest {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() {
-		objectEncoder = new AesJsonObjectEncoder(new ObjectMapper(), new RandomAesKeyAccessor());
+		objectEncoder = new AesJsonObjectEncoder(JsonMapper.builder().build(), new RandomAesKeyAccessor());
 	}
 
 	@Test

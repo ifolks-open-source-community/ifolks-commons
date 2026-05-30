@@ -7,7 +7,7 @@ import org.ifolks.commons.rest.security.exception.InvalidTokenException;
 import org.ifolks.commons.rest.security.tokens.encoder.TokenDecoder;
 import org.ifolks.commons.rest.security.tokens.jwt.JsonWebToken;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * 
@@ -19,14 +19,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class JwtDecoder<T extends JsonWebToken<H, B>, H, B> implements TokenDecoder<JsonWebToken<H, B>> {
 	
-	private ObjectMapper objectMapper;
+	private JsonMapper jsonMapper;
 	private Class<T> tokenClass;
 	private Class<H> headerClass;
 	private Class<B> bodyClass;
 
-	public JwtDecoder(ObjectMapper objectMapper, Class<T> tokenClass, Class<H> headerClass, Class<B> bodyClass) {
+	public JwtDecoder(JsonMapper jsonMapper, Class<T> tokenClass, Class<H> headerClass, Class<B> bodyClass) {
 		super();
-		this.objectMapper = objectMapper;
+		this.jsonMapper = jsonMapper;
 		this.tokenClass = tokenClass;
 		this.headerClass = headerClass;
 		this.bodyClass = bodyClass;
@@ -34,13 +34,14 @@ public class JwtDecoder<T extends JsonWebToken<H, B>, H, B> implements TokenDeco
 	
 	
 
+
 	@Override
 	public T decode(String token) {
 		String[] parts = token.split("\\.");
 		try {
 			T result = tokenClass.getDeclaredConstructor().newInstance();		
-			result.setHeader(objectMapper.readValue(Base64.decodeBase64(parts[0]), headerClass));
-			result.setBody(objectMapper.readValue(Base64.decodeBase64(parts[1]), bodyClass));
+			result.setHeader(jsonMapper.readValue(Base64.decodeBase64(parts[0]), headerClass));
+			result.setBody(jsonMapper.readValue(Base64.decodeBase64(parts[1]), bodyClass));
 			result.setSignature(Base64.decodeBase64(parts[2]));
 			result.setPayload((parts[0] + "." + parts[1]).getBytes(StandardCharsets.UTF_8));
 			

@@ -25,19 +25,18 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 public class FromJwtSecurityContextProviderTest {
 
 	private static final Logger logger = LoggerFactory.getLogger(RsaJwtVerifierTest.class);
 
-	private static final BasicRsaJwtEncoder encoder = new BasicRsaJwtEncoder(new ObjectMapper(), new RsaSigner(new RsaPrivateKeyAccessorMock()), RsaAlgorithms.RS256.name(), "test");
+	private static final BasicRsaJwtEncoder encoder = new BasicRsaJwtEncoder(JsonMapper.builder().build(), new RsaSigner(new RsaPrivateKeyAccessorMock()), RsaAlgorithms.RS256.name(), "test");
 
 	private static final FromBasicRsaJwtSecurityContextProvider provider;
 	
 	static {
-		provider = new FromBasicRsaJwtSecurityContextProvider(new BasicRsaJwtDecoder(new ObjectMapper()), new BasicRsaJwtVerifier(new RsaSignatureVerifier(new RsaPublicKeyAccessorMock())), new BasicJwtBodyValidatorMock());
+		provider = new FromBasicRsaJwtSecurityContextProvider(new BasicRsaJwtDecoder(JsonMapper.builder().build()), new BasicRsaJwtVerifier(new RsaSignatureVerifier(new RsaPublicKeyAccessorMock())), new BasicJwtBodyValidatorMock());
 	}
 	
 	@After
@@ -92,7 +91,7 @@ public class FromJwtSecurityContextProviderTest {
 	
 	
 	@Test(expected=InvalidTokenException.class)
-	public void testModifiedBody() throws JsonProcessingException {
+	public void testModifiedBody() {
 		
 		BasicJwtBody body = new BasicJwtBody();
 		body.setApplication("IGEN");
@@ -110,7 +109,7 @@ public class FromJwtSecurityContextProviderTest {
 		BasicJwtBody modifiedBody = new BasicJwtBody();
 		modifiedBody.setApplication("IGEN");
 		modifiedBody.setUser("nicolas.thibault@ifolks.com");
-		String wrongPart = Base64.encodeBase64URLSafeString(new ObjectMapper().writeValueAsBytes(modifiedBody));
+		String wrongPart = Base64.encodeBase64URLSafeString(JsonMapper.builder().build().writeValueAsBytes(modifiedBody));
 		
 		String fake = parts[0] + "." + wrongPart + "." + parts[2];
 		

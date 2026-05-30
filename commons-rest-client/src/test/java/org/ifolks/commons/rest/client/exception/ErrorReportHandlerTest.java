@@ -6,24 +6,23 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 public class ErrorReportHandlerTest {
 
-	private static ObjectMapper objectMapper = new ObjectMapper();
+	private static JsonMapper jsonMapper = JsonMapper.builder().build();
 	private static ErrorReportHandler errorReportHandler;
 
 	
 	@BeforeClass
 	public static void setUpBeforeClass() {
 		errorReportHandler = new ErrorReportHandler();
-		errorReportHandler.setObjectMapper(objectMapper);
+		errorReportHandler.setJsonMapper(jsonMapper);
 	}
 	
 	
 	@Test
-	public void testApplicationExceptionNoDetails() throws JsonProcessingException {
+	public void testApplicationExceptionNoDetails() {
 		
 		String message = "test";
 		
@@ -44,7 +43,7 @@ public class ErrorReportHandlerTest {
 	
 	
 	@Test
-	public void testApplicationExceptionDummyDetails() throws JsonProcessingException {
+	public void testApplicationExceptionDummyDetails() {
 		
 		String message = "test";
 		Dummy dummy = new Dummy(1L, "test");
@@ -58,7 +57,7 @@ public class ErrorReportHandlerTest {
 		} catch (ApplicationException e) {
 			Assert.assertEquals(e.getMessage(), message);
 			Assert.assertTrue(e instanceof TestException);
-
+ 
 			return;
 		}
 		Assert.fail();

@@ -14,15 +14,15 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 public class BasicRsaJwtEncoderTest {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BasicRsaJwtEncoderTest.class);
 
-	private static final BasicRsaJwtEncoder encoder = new BasicRsaJwtEncoder(new ObjectMapper(), new RsaSigner(new RsaPrivateKeyAccessorMock()), RsaAlgorithms.RS256.name(), "test");
+	private static final BasicRsaJwtEncoder encoder = new BasicRsaJwtEncoder(JsonMapper.builder().build(), new RsaSigner(new RsaPrivateKeyAccessorMock()), RsaAlgorithms.RS256.name(), "test");
 	
-	private static final BasicRsaJwtDecoder decoder = new BasicRsaJwtDecoder(new ObjectMapper());
+	private static final BasicRsaJwtDecoder decoder = new BasicRsaJwtDecoder(JsonMapper.builder().build());
 	
 	@Test
 	public void test() {

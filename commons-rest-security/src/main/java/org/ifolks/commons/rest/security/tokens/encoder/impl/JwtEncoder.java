@@ -7,8 +7,8 @@ import org.ifolks.commons.rest.security.exception.TokenEncodingException;
 import org.ifolks.commons.rest.security.tokens.encoder.TokenEncoder;
 import org.ifolks.commons.rest.security.tokens.jwt.JsonWebToken;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * 
@@ -20,12 +20,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public abstract class JwtEncoder<T extends JsonWebToken> implements TokenEncoder<T> {
 	
-	private ObjectMapper objectMapper;
+	private JsonMapper jsonMapper;
 	
 
-	public JwtEncoder(ObjectMapper objectMapper) {
+	public JwtEncoder(JsonMapper jsonMapper) {
 		super();
-		this.objectMapper = objectMapper;
+		this.jsonMapper = jsonMapper;
 	}
 	
 	
@@ -39,14 +39,14 @@ public abstract class JwtEncoder<T extends JsonWebToken> implements TokenEncoder
 		String signaturePart = "";
 		
 		try {
-			headerPart += Base64.encodeBase64URLSafeString(objectMapper.writeValueAsBytes(token.getHeader()));
-			bodyPart += Base64.encodeBase64URLSafeString(objectMapper.writeValueAsBytes(token.getBody()));
+			headerPart += Base64.encodeBase64URLSafeString(jsonMapper.writeValueAsBytes(token.getHeader()));
+			bodyPart += Base64.encodeBase64URLSafeString(jsonMapper.writeValueAsBytes(token.getBody()));
 			result = headerPart + "." + bodyPart;
 			payload = result.getBytes(StandardCharsets.UTF_8);
 			signaturePart = Base64.encodeBase64URLSafeString(sign(payload));
 			result = result + "." + signaturePart;
 			
-		} catch (JsonProcessingException e) {
+		} catch (JacksonException e) {
 			throw new TokenEncodingException("Failed to encode token", e);
 		}
 		

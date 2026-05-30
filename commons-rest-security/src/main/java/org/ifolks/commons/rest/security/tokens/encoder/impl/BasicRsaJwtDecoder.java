@@ -4,7 +4,7 @@ import org.ifolks.commons.rest.security.tokens.jwt.BasicJwtBody;
 import org.ifolks.commons.rest.security.tokens.jwt.BasicRsaJsonWebToken;
 import org.ifolks.commons.rest.security.tokens.jwt.RsaJwtHeader;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * 
@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class BasicRsaJwtDecoder extends JwtDecoder<BasicRsaJsonWebToken, RsaJwtHeader, BasicJwtBody> {
 	
 	
-	public BasicRsaJwtDecoder(ObjectMapper objectMapper) {
-		super(objectMapper, BasicRsaJsonWebToken.class, RsaJwtHeader.class, BasicJwtBody.class);
+	public BasicRsaJwtDecoder(JsonMapper jsonMapper) {
+		super(jsonMapper, BasicRsaJsonWebToken.class, RsaJwtHeader.class, BasicJwtBody.class);
 	}
 }

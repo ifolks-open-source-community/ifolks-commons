@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 public class JsonSerializerTest {
 
@@ -14,7 +14,7 @@ private static Serializer serializer;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() {
-		serializer = new JsonSerializer(new ObjectMapper());
+		serializer = new JsonSerializer(JsonMapper.builder().build());
 	}
 
 	@Test

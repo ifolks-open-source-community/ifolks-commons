@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.ResponseErrorHandler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 
 /**
@@ -25,13 +25,13 @@ public class ErrorReportHandler implements ResponseErrorHandler {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ErrorReportHandler.class);
 	
-	private ObjectMapper objectMapper;
+	private JsonMapper jsonMapper;
 	
-	public ObjectMapper getObjectMapper() {
-		return objectMapper;
+	public JsonMapper getJsonMapper() {
+		return jsonMapper;
 	}
-	public void setObjectMapper(ObjectMapper objectMapper) {
-		this.objectMapper = objectMapper;
+	public void setJsonMapper(JsonMapper jsonMapper) {
+		this.jsonMapper = jsonMapper;
 	}
 
 
@@ -53,7 +53,7 @@ public class ErrorReportHandler implements ResponseErrorHandler {
 	public void handleError(java.net.URI url, org.springframework.http.HttpMethod method, ClientHttpResponse response) throws IOException {
 
 		try {
-			ErrorReport errorReport = objectMapper.readValue(response.getBody(), ErrorReport.class);
+			ErrorReport errorReport = jsonMapper.readValue(response.getBody(), ErrorReport.class);
 			convertErrorReport(errorReport);
 		} catch (IOException e) {
 			logger.warn("Could not read error report : a TechnicalError will be thrown");

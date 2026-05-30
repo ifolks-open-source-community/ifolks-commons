@@ -2,31 +2,31 @@ package org.ifolks.commons.text.serialization;
 
 import org.ifolks.commons.text.serialization.exceptions.SerializationException;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * 
- * Implementation of a {@link Serializer} in Json that uses a jackson {@link ObjectMapper}
+ * Implementation of a {@link Serializer} in Json that uses a jackson {@link JsonMapper}
  * 
  * @author Nicolas Thibault
  *
  */
 public class JsonSerializer implements Serializer {
 	
-	private ObjectMapper objectMapper;
+	private JsonMapper jsonMapper;
 
-	public JsonSerializer(ObjectMapper objectMapper) {
+	public JsonSerializer(JsonMapper jsonMapper) {
 		super();
-		this.objectMapper = objectMapper;
+		this.jsonMapper = jsonMapper;
 	}
 
 	@Override
 	public String serialize(Object object) {
 		
 		try {
-			return objectMapper.writeValueAsString(object) ;
-		} catch (JsonProcessingException e) {
+			return jsonMapper.writeValueAsString(object) ;
+		} catch (JacksonException e) {
 			throw new SerializationException("failed to serialize object : " + e.getMessage(), e);
 		}
 	}
@@ -35,8 +35,8 @@ public class JsonSerializer implements Serializer {
 	public <T> T deserialize(String arg, Class<T> targetClass) {
 		
 		try {
-			return objectMapper.readValue(arg, targetClass);
-		} catch (JsonProcessingException e) {
+			return jsonMapper.readValue(arg, targetClass);
+		} catch (JacksonException e) {
 			throw new SerializationException("failed to deserialize object : " + e.getMessage(), e);
 		}
 	}

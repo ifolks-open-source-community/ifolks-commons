@@ -6,7 +6,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import tools.jackson.databind.json.JsonMapper;
 
 public class AccessLoggerTest {
 
@@ -15,9 +16,10 @@ public class AccessLoggerTest {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() {
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.setDefaultPropertyInclusion(Include.NON_NULL);
-		logger = new AccessLogger(new JsonSerializer(objectMapper));
+		JsonMapper jsonMapper = JsonMapper.builder()
+			.changeDefaultPropertyInclusion(incl -> incl.withValueInclusion(Include.NON_NULL))
+			.build();
+		logger = new AccessLogger(new JsonSerializer(jsonMapper));
 	}
 	
 	
