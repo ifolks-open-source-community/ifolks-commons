@@ -5,9 +5,9 @@ import java.util.Date;
 
 import org.ifolks.commons.crypto.accessors.RandomAesKeyAccessor;
 import org.ifolks.commons.crypto.miscellaneous.TestObject;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import tools.jackson.databind.json.JsonMapper;
 
@@ -16,7 +16,7 @@ public class AesObjectEncoderTest {
 	
 	private static AesJsonObjectEncoder objectEncoder;
 	
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() {
 		objectEncoder = new AesJsonObjectEncoder(JsonMapper.builder().build(), new RandomAesKeyAccessor());
 	}
@@ -33,9 +33,11 @@ public class AesObjectEncoderTest {
 		TestObject decryptedObject = objectEncoder.decode(cryptedText, TestObject.class);
 		System.out.println(decryptedObject);
 		
-		Assert.assertEquals(decryptedObject,plainObject);
+		Assertions.assertEquals(decryptedObject,plainObject);
 		
 	}
 		
 }
+
+
 

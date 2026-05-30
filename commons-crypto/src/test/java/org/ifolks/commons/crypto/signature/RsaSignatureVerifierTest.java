@@ -4,16 +4,16 @@ import java.nio.charset.StandardCharsets;
 
 import org.ifolks.commons.crypto.accessors.RsaPrivateKeyAccessorMock;
 import org.ifolks.commons.crypto.accessors.RsaPublicKeyAccessorMock;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class RsaSignatureVerifierTest {
 
 	private static RsaSigner signer;
 	private static RsaSignatureVerifier verifier;
 	
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() {
 		signer = new RsaSigner(new RsaPrivateKeyAccessorMock());
 		verifier = new RsaSignatureVerifier(new RsaPublicKeyAccessorMock());
@@ -26,6 +26,8 @@ public class RsaSignatureVerifierTest {
 		byte[] signature = signer.sign(RsaAlgorithms.RS256, "test", data);
 		boolean checked = verifier.checkSignature(RsaAlgorithms.RS256, "test", data, signature);
 		
-		Assert.assertTrue(checked);
+		Assertions.assertTrue(checked);
 	}
 }
+
+

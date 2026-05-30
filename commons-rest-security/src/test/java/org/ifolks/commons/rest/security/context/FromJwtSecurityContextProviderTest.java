@@ -19,9 +19,9 @@ import org.ifolks.commons.rest.security.tokens.jwt.BasicRsaJsonWebToken;
 import org.ifolks.commons.rest.security.tokens.jwt.RsaJwtHeader;
 import org.ifolks.commons.rest.security.tokens.verification.RsaJwtVerifierTest;
 import org.ifolks.commons.rest.security.tokens.verification.impl.BasicRsaJwtVerifier;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +39,7 @@ public class FromJwtSecurityContextProviderTest {
 		provider = new FromBasicRsaJwtSecurityContextProvider(new BasicRsaJwtDecoder(JsonMapper.builder().build()), new BasicRsaJwtVerifier(new RsaSignatureVerifier(new RsaPublicKeyAccessorMock())), new BasicJwtBodyValidatorMock());
 	}
 	
-	@After
+	@AfterEach
 	public void clear() {
 		SecurityContextHolder.unbindContext();
 	}
@@ -61,12 +61,12 @@ public class FromJwtSecurityContextProviderTest {
 		provider.provideSecurityContext(token);
 		
 		BasicJwtBody context = (BasicJwtBody) SecurityContextHolder.getContext();
-		Assert.assertTrue(context.getUser().equals("nicolas.thibault@ifolks.org") && context.getApplication().equals("IGEN"));
+		Assertions.assertTrue(context.getUser().equals("nicolas.thibault@ifolks.org") && context.getApplication().equals("IGEN"));
 		
 	}
 	
 	
-	@Test(expected=InvalidTokenException.class)
+	@Test
 	public void testInvalidCredentials() {
 		
 		BasicJwtBody body = new BasicJwtBody();
@@ -80,17 +80,19 @@ public class FromJwtSecurityContextProviderTest {
 		
 		String token = encoder.encode(jwt);
 		
-		try {
-			provider.provideSecurityContext(token);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw e;
-		}
+		Assertions.assertThrows(InvalidTokenException.class, () -> {
+			try {
+				provider.provideSecurityContext(token);
+			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
+				throw e;
+			}
+		});
 		
 	}
 	
 	
-	@Test(expected=InvalidTokenException.class)
+	@Test
 	public void testModifiedBody() {
 		
 		BasicJwtBody body = new BasicJwtBody();
@@ -113,12 +115,15 @@ public class FromJwtSecurityContextProviderTest {
 		
 		String fake = parts[0] + "." + wrongPart + "." + parts[2];
 		
-		try {
-			provider.provideSecurityContext(fake);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw e;
-		}
+		Assertions.assertThrows(InvalidTokenException.class, () -> {
+			try {
+				provider.provideSecurityContext(fake);
+			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
+				throw e;
+			}
+		});
 		
 	}
 }
+

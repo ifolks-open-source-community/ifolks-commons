@@ -1,24 +1,26 @@
 package org.ifolks.commons.api.model;
 
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class SelectItemTest {
 	private static SelectItem item1;
 	private static SelectItem item2;
 	private static SelectItem item3;
 
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() {
 		item1 = new SelectItem("test", "hello");
 		item2 = new SelectItem("test", "");
 		item3 = new SelectItem("test", null);
 	}
 
-	@Test(expected=NullPointerException.class)
+	@Test
 	public void testSelectItemComparatorNullPointerException() throws NullPointerException {
-		item1.compareTo(null);		
+		Assertions.assertThrows(NullPointerException.class, () -> {
+			item1.compareTo(null);
+		});
 	}
 	
 	/*
@@ -32,7 +34,7 @@ public class SelectItemTest {
 		// When it is compared to a SelectItem with a null label
 		int order = item.compareTo(item3);		
 		// Then it should have the same order
-		Assert.assertEquals(0, order);
+		Assertions.assertEquals(0, order);
 	}
 	
 	@Test
@@ -42,7 +44,7 @@ public class SelectItemTest {
 		// When it is compared to a SelectItem with a null label
 		int order = item.compareTo(item3);		
 		// Then it should be ordered after
-		Assert.assertTrue(order > 0);
+		Assertions.assertTrue(order > 0);
 	}
 	
 	@Test
@@ -52,7 +54,7 @@ public class SelectItemTest {
 		// When it is compared to a SelectItem with a null label
 		int order = item.compareTo(item3);		
 		// Then it should be ordered after
-		Assert.assertTrue(order > 0);
+		Assertions.assertTrue(order > 0);
 	}
 	
 	@Test
@@ -62,7 +64,7 @@ public class SelectItemTest {
 		// When it is compared to a SelectItem with an empty label
 		int order = item.compareTo(item2);		
 		// Then it should have the same order
-		Assert.assertEquals(0, order);
+		Assertions.assertEquals(0, order);
 	}
 	
 	@Test
@@ -72,7 +74,7 @@ public class SelectItemTest {
 		// When it is compared to a SelectItem with an empty label
 		int order = item.compareTo(item2);		
 		// Then it should be ordered after
-		Assert.assertTrue(order > 0);
+		Assertions.assertTrue(order > 0);
 	}
 	
 	@Test
@@ -82,7 +84,7 @@ public class SelectItemTest {
 		// When it is compared to a SelectItem with a non empty label whith a HIGHER rank in the alphabetical order
 		int order = item.compareTo(item1);		
 		// Then it should be ordered before
-		Assert.assertTrue(order<0);
+		Assertions.assertTrue(order<0);
 	}
 	
 	@Test
@@ -92,7 +94,7 @@ public class SelectItemTest {
 		// When it is compared to a SelectItem with a non empty label whith the SAME rank in the alphabetical order
 		int order = item.compareTo(item1);		
 		// Then it should be ordered before
-		Assert.assertEquals(0, order);
+		Assertions.assertEquals(0, order);
 	}
 	
 	@Test
@@ -102,9 +104,11 @@ public class SelectItemTest {
 		// When it is compared to a SelectItem with a non empty label whith a LOWER rank in the alphabetical order
 		int order = item.compareTo(item2);		
 		// Then it should be ordered before
-		Assert.assertTrue(order>0);
+		Assertions.assertTrue(order>0);
 	}
 	
 	// NOTE: Test between "aaa" and "1" and "a" vs "A" are depending on the String.compareTo implementation of Java and are asserted to have ever been tested.
 
 }
+
+

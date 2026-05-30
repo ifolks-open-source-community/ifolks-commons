@@ -2,15 +2,15 @@ package org.ifolks.commons.text.serialization;
 
 import org.ifolks.commons.text.miscellanous.Dummy;
 import org.ifolks.commons.text.miscellanous.Fool;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class XmlSerializerTest {
 
 private static Serializer serializer;
 	
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() {
 		serializer = new XmlSerializer();
 	}
@@ -25,7 +25,7 @@ private static Serializer serializer;
 		System.out.println(serializedFool);
 		Fool deserialized = serializer.deserialize(serializedFool, Fool.class);
 		
-		Assert.assertTrue(deserialized.equals(fool));
+		Assertions.assertTrue(deserialized.equals(fool));
 		
 	}
 	
@@ -42,7 +42,9 @@ private static Serializer serializer;
 		System.out.println(serializedDummy);
 		Dummy deserialized = serializer.deserialize(serializedDummy, Dummy.class);
 		
-		Assert.assertTrue(deserialized.equals(dummy));
+		Assertions.assertTrue(deserialized.equals(dummy));
 		
 	}
 }
+
+

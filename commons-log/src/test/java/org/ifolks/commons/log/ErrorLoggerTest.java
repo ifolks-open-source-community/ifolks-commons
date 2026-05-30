@@ -2,8 +2,8 @@ package org.ifolks.commons.log;
 
 import org.ifolks.commons.api.exception.TechnicalError;
 import org.ifolks.commons.text.serialization.JsonSerializer;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -14,7 +14,7 @@ public class ErrorLoggerTest {
 	private static ErrorLogger logger;
 
 	
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() {
 		JsonMapper jsonMapper = JsonMapper.builder()
 			.changeDefaultPropertyInclusion(incl -> incl.withValueInclusion(Include.NON_NULL))
@@ -28,3 +28,5 @@ public class ErrorLoggerTest {
 		logger.logApplicationException(new TechnicalError("error", new TechnicalError("root cause")));
 	}
 }
+
+

@@ -18,7 +18,8 @@ import org.ifolks.commons.rest.security.tokens.jwt.JsonWebToken;
 import org.ifolks.commons.rest.security.tokens.jwt.RsaJwtHeader;
 import org.ifolks.commons.rest.security.tokens.verification.impl.BasicRsaJwtVerifier;
 import org.ifolks.commons.rest.security.tokens.verification.impl.RsaJwtVerifier;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +58,7 @@ public class RsaJwtVerifierTest {
 	}
 	
 	
-	@Test(expected=InvalidTokenException.class)
+	@Test
 	public void testBadSignature() {
 		
 		BasicJwtBody body = new BasicJwtBody();
@@ -74,17 +75,19 @@ public class RsaJwtVerifierTest {
 		
 		JsonWebToken<RsaJwtHeader, BasicJwtBody> decoded = decoder.decode(encoded);
 		
-		try {
-			verifier.verifyToken(decoded);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw e;
-		}
+		Assertions.assertThrows(InvalidTokenException.class, () -> {
+			try {
+				verifier.verifyToken(decoded);
+			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
+				throw e;
+			}
+		});
 		
 	}
 	
 	
-	@Test(expected=InvalidTokenException.class)
+	@Test
 	public void testModifiedBody() {
 		
 		BasicJwtBody body = new BasicJwtBody();
@@ -109,12 +112,15 @@ public class RsaJwtVerifierTest {
 		
 		JsonWebToken<RsaJwtHeader, BasicJwtBody> decoded = decoder.decode(fake);
 		
-		try {
-			verifier.verifyToken(decoded);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw e;
-		}
+		Assertions.assertThrows(InvalidTokenException.class, () -> {
+			try {
+				verifier.verifyToken(decoded);
+			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
+				throw e;
+			}
+		});
 		
 	}
 }
+

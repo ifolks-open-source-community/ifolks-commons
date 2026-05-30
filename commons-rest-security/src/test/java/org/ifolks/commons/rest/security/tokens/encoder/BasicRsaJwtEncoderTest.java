@@ -9,8 +9,8 @@ import org.ifolks.commons.rest.security.tokens.jwt.BasicJwtBody;
 import org.ifolks.commons.rest.security.tokens.jwt.BasicRsaJsonWebToken;
 import org.ifolks.commons.rest.security.tokens.jwt.JsonWebToken;
 import org.ifolks.commons.rest.security.tokens.jwt.RsaJwtHeader;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,9 +44,10 @@ public class BasicRsaJwtEncoderTest {
 		logger.debug(decoded.getBody().getApplication());
 		logger.debug(decoded.getBody().getUser());
 		
-		Assert.assertTrue(decoded.getHeader().getAlgorithm().equals(RsaAlgorithms.RS256.name()));
-		Assert.assertTrue(decoded.getHeader().getPublicKeyId().equals("test"));
-		Assert.assertTrue(decoded.getBody().getApplication().equals("IGEN"));
-		Assert.assertTrue(decoded.getBody().getUser().equals("nicolas.thibault@ifolks.org"));
+		Assertions.assertTrue(decoded.getHeader().getAlgorithm().equals(RsaAlgorithms.RS256.name()));
+		Assertions.assertTrue(decoded.getHeader().getPublicKeyId().equals("test"));
+		Assertions.assertTrue(decoded.getBody().getApplication().equals("IGEN"));
+		Assertions.assertTrue(decoded.getBody().getUser().equals("nicolas.thibault@ifolks.org"));
 	}
 }
+

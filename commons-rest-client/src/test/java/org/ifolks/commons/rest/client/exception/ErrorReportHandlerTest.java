@@ -2,9 +2,9 @@ package org.ifolks.commons.rest.client.exception;
 
 import org.ifolks.commons.api.exception.ApplicationException;
 import org.ifolks.commons.api.exception.ErrorReport;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import tools.jackson.databind.json.JsonMapper;
 
@@ -14,7 +14,7 @@ public class ErrorReportHandlerTest {
 	private static ErrorReportHandler errorReportHandler;
 
 	
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() {
 		errorReportHandler = new ErrorReportHandler();
 		errorReportHandler.setJsonMapper(jsonMapper);
@@ -33,12 +33,12 @@ public class ErrorReportHandlerTest {
 		try {
 			errorReportHandler.convertErrorReport(errorReport);
 		} catch (ApplicationException e) {
-			Assert.assertEquals(e.getMessage(), message);
-			Assert.assertTrue(e instanceof TestException);
+			Assertions.assertEquals(e.getMessage(), message);
+			Assertions.assertTrue(e instanceof TestException);
 			
 			return;
 		}
-		Assert.fail();		
+		Assertions.fail();		
 	}
 	
 	
@@ -55,11 +55,13 @@ public class ErrorReportHandlerTest {
 		try {
 			errorReportHandler.convertErrorReport(errorReport);
 		} catch (ApplicationException e) {
-			Assert.assertEquals(e.getMessage(), message);
-			Assert.assertTrue(e instanceof TestException);
+			Assertions.assertEquals(e.getMessage(), message);
+			Assertions.assertTrue(e instanceof TestException);
  
 			return;
 		}
-		Assert.fail();
+		Assertions.fail();
 	}
 }
+
+

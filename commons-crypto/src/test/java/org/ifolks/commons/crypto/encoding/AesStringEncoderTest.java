@@ -3,15 +3,15 @@ package org.ifolks.commons.crypto.encoding;
 import java.security.NoSuchAlgorithmException;
 
 import org.ifolks.commons.crypto.accessors.RandomAesKeyAccessor;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class AesStringEncoderTest {
 	
 	private static AesStringEncoder encoder;
 	
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() {
 		encoder = new AesStringEncoder(new RandomAesKeyAccessor());
 	}
@@ -27,8 +27,10 @@ public class AesStringEncoderTest {
 		String decryptedText = encoder.decode(cryptedText);
 		System.out.println(decryptedText);
 		
-		Assert.assertEquals(decryptedText,plainText);
+		Assertions.assertEquals(decryptedText,plainText);
 	}
 	
 
 }
+
+

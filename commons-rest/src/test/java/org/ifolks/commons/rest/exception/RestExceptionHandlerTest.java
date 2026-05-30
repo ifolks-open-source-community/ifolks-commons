@@ -2,16 +2,16 @@ package org.ifolks.commons.rest.exception;
 
 import org.ifolks.commons.api.exception.ApplicationException;
 import org.ifolks.commons.api.exception.ErrorReport;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class RestExceptionHandlerTest {
 
 	private static RestExceptionHandler restExceptionHandler;
 
 	
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() {
 		restExceptionHandler = new RestExceptionHandler();
 	}
@@ -25,7 +25,9 @@ public class RestExceptionHandlerTest {
 		
 		ErrorReport errorReport = restExceptionHandler.handleApplicationException(e);
 		
-		Assert.assertEquals(errorReport.getMessage(), message);
-		Assert.assertTrue(errorReport.getExceptionClassName().equals(TestException.class.getName()));
+		Assertions.assertEquals(errorReport.getMessage(), message);
+		Assertions.assertTrue(errorReport.getExceptionClassName().equals(TestException.class.getName()));
 	}
 }
+
+

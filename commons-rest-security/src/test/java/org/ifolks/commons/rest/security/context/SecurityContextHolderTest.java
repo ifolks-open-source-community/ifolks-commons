@@ -3,21 +3,23 @@ package org.ifolks.commons.rest.security.context;
 import org.ifolks.commons.rest.security.exception.ContextConflictException;
 import org.ifolks.commons.rest.security.exception.NoBoundContextException;
 import org.ifolks.commons.rest.security.tokens.SecurityContextMock;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class SecurityContextHolderTest {
 	
-	@After
+	@AfterEach
 	public void clear() {
 		SecurityContextHolder.unbindContext();
 	}
 	
 	
-	@Test(expected=NullPointerException.class)
+	@Test
 	public void testBindNullCredentials() {
-		SecurityContextHolder.bindContext(null);
+		Assertions.assertThrows(NullPointerException.class, () -> {
+			SecurityContextHolder.bindContext(null);
+		});
 	}
 	
 	
@@ -25,20 +27,25 @@ public class SecurityContextHolderTest {
 	public void testBindCredentials() {
 		SecurityContextMock context = new SecurityContextMock();
 		SecurityContextHolder.bindContext(context);
-		Assert.assertNotNull(SecurityContextHolder.getContextOrNull());
+		Assertions.assertNotNull(SecurityContextHolder.getContextOrNull());
 	}
 	
 	
-	@Test(expected=ContextConflictException.class)
+	@Test
 	public void testBindUserCredentialsConflict() {
 		SecurityContextMock context = new SecurityContextMock();
 		SecurityContextHolder.bindContext(context);
-		SecurityContextHolder.bindContext(context);
+		Assertions.assertThrows(ContextConflictException.class, () -> {
+			SecurityContextHolder.bindContext(context);
+		});
 	}
 	
 	
-	@Test(expected=NoBoundContextException.class)
+	@Test
 	public void testGetNullUserCredentials() {
-		SecurityContextHolder.getContext();
+		Assertions.assertThrows(NoBoundContextException.class, () -> {
+			SecurityContextHolder.getContext();
+		});
 	}
 }
+

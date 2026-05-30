@@ -2,8 +2,8 @@ package org.ifolks.commons.log;
 
 import org.ifolks.commons.log.context.RequestChannels;
 import org.ifolks.commons.text.serialization.JsonSerializer;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -14,7 +14,7 @@ public class AccessLoggerTest {
 	private static AccessLogger logger;
 
 	
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() {
 		JsonMapper jsonMapper = JsonMapper.builder()
 			.changeDefaultPropertyInclusion(incl -> incl.withValueInclusion(Include.NON_NULL))
@@ -35,3 +35,5 @@ public class AccessLoggerTest {
 		logger.logResponse("MY_SERVICE", new Dummy(4L,"dummy response"), 10L, "200", "OK");
 	}
 }
+
+
