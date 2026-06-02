@@ -4,7 +4,7 @@
 
 	<groupId>org.ifolks.commons</groupId>
 	<artifactId>commons-root</artifactId>
-	<version>1.0.0-M1</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>iFolks Commons</name>
 	<description>Root module of iFolks Commons</description>
 	<url>http://ifolks-open-source-community.github.io/ifolks-commons</url>
