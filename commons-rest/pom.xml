@@ -27,14 +27,8 @@
 		
 		<dependency>
 			<groupId>org.ifolks.commons</groupId>
-			<artifactId>commons-rest-security</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.ifolks.commons</groupId>
 			<artifactId>commons-log</artifactId>
 		</dependency>
-		
 		
 		<!-- loggers -->
 		<dependency>
@@ -42,13 +36,24 @@
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
 		
-		
-		<!-- spring webmvc -->
+		<!-- spring web -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 		</dependency>
 		
+		<!-- spring security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+		</dependency>
+
+		<!-- servlet (provided) -->
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		
 		<!-- AspectJ -->
 		<dependency>
@@ -66,7 +71,6 @@
 			<artifactId>aspectjrt</artifactId>
 		</dependency>
 		
-		
 		<!-- Junit -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -77,4 +81,3 @@
 	</dependencies>
 
 </project>
-
