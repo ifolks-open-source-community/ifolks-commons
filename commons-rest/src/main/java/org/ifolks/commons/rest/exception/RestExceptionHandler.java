@@ -4,6 +4,7 @@ import org.ifolks.commons.api.exception.ApplicationException;
 import org.ifolks.commons.api.exception.ErrorReport;
 import org.ifolks.commons.api.exception.TechnicalError;
 import org.ifolks.commons.api.exception.repository.ObjectNotFoundException;
+import org.ifolks.commons.api.exception.repository.ResourceNotFoundException;
 import org.ifolks.commons.api.exception.rights.AccessDeniedException;
 import org.ifolks.commons.api.exception.validation.InvalidArgumentException;
 import org.slf4j.Logger;
@@ -60,9 +61,22 @@ public class RestExceptionHandler {
 		return errorReport;
 	}
 	
-	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public @ResponseBody ErrorReport handleApplicationException(ObjectNotFoundException e) {
+		
+		if (printErrorStackInRootLogger) classLogger.error(e.getMessage(),e);
+
+		ErrorReport errorReport = new ErrorReport();
+		errorReport.setExceptionClassName(e.getClass().getName());
+		errorReport.setMessage(e.getMessage());
+
+		return errorReport;
+	}
+
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public @ResponseBody ErrorReport handleApplicationException(ResourceNotFoundException e) {
 		
 		if (printErrorStackInRootLogger) classLogger.error(e.getMessage(),e);
 
