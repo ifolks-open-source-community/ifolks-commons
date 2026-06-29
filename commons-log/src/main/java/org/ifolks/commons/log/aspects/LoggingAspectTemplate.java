@@ -73,8 +73,13 @@ public abstract class LoggingAspectTemplate {
 			throw e;
 		} catch (Exception e) {
 			elapsedTime = System.currentTimeMillis() - start;
-			accessLogger.logResponse(transactionType, null, elapsedTime, "500", e.getMessage());
-			errorLogger.logException(e);
+			if ("org.springframework.security.access.AccessDeniedException".equals(e.getClass().getName())) {
+				accessLogger.logResponse(transactionType, null, elapsedTime, "403", "access.denied");
+				errorLogger.logException(e, "403", "access.denied");
+			} else {
+				accessLogger.logResponse(transactionType, null, elapsedTime, "500", e.getMessage());
+				errorLogger.logException(e);
+			}
 			throw e;
 		}
 	}

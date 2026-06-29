@@ -91,4 +91,26 @@ public class ErrorLogger {
 			classLogger.error("failed to log exception : " + ex.getMessage(),ex);
 		}
 	}
+
+	public void logException(Exception e, String status, String label) {
+		
+		ErrorLogMessage errorLogMessage = new ErrorLogMessage();
+		errorLogMessage.setErrorStatus(status);
+		errorLogMessage.setErrorLabel(label);
+		
+		StringWriter stringWriter = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(stringWriter);
+		e.printStackTrace(printWriter);
+		
+		errorLogMessage.setErrorTrace(stringWriter.toString());
+		
+		String serialized;
+		try {
+			serialized = serializer.serialize(errorLogMessage);
+			logger.error(serialized);
+			if (printErrorStackInRootLogger) classLogger.error(label, e);
+		} catch (Exception ex) {
+			classLogger.error("failed to log exception : " + ex.getMessage(),ex);
+		}
+	}
 }
