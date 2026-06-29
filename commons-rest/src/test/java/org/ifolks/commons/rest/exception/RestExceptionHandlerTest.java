@@ -1,7 +1,7 @@
 package org.ifolks.commons.rest.exception;
 
 import org.ifolks.commons.api.exception.ApplicationException;
-import org.ifolks.commons.api.exception.ErrorReport;
+import org.springframework.http.ProblemDetail;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -23,11 +23,9 @@ public class RestExceptionHandlerTest {
 		String message = "test";
 		ApplicationException e = new TestException(message);
 		
-		ErrorReport errorReport = restExceptionHandler.handleApplicationException(e);
+		ProblemDetail problemDetail = restExceptionHandler.handleApplicationException(e);
 		
-		Assertions.assertEquals(errorReport.getMessage(), message);
-		Assertions.assertTrue(errorReport.getExceptionClassName().equals(TestException.class.getName()));
+		Assertions.assertEquals(problemDetail.getDetail(), message);
+		Assertions.assertTrue(TestException.class.getName().equals(problemDetail.getProperties().get("exception")));
 	}
 }
-
-
