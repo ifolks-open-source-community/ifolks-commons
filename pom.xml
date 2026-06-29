@@ -25,7 +25,6 @@
 		<module>commons-log</module>
 		<module>commons-jms</module>
 		<module>commons-rest</module>
-		<module>commons-rest-client</module>
 		<module>commons-soap</module>
 	</modules>
 
