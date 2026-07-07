@@ -25,10 +25,9 @@ The repository is organized into distinct sub-modules. Currently, the most relev
 | **`commons-text`** | String formatting, text template processing, and serialization. | Serializers and common string manipulations. |
 
 ### Other Shared Modules (Evolving)
-* **`commons-rest-security`** : Base security architectures, token providers, and filters (JWT/RSA verifiers, role checking).
-* **`commons-crypto`** : Utility components for password-hashing and ciphering.
 * **`commons-jms`** : Messaging infrastructure utilities.
 * **`commons-soap`** : SOAP client and marshalling templates.
+
 
 ---
 
@@ -44,7 +43,7 @@ Clone and build the modules into your local Maven cache (`.m2`):
 mvn clean install
 ```
 
-This installs all `commons-*` JARs under version `1.0.0-M1` (or SNAPSHOT) so they can be seamlessly resolved by the **iFolks Generator** compiler and the **iFolks Demo** projects.
+This installs all `commons-*` JARs under version `1.0.0` (or SNAPSHOT) so they can be seamlessly resolved by the **iFolks Generator** compiler and the **iFolks Demo** projects.
 
 ---
 
