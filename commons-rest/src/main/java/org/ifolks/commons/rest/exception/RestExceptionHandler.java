@@ -9,12 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 /**
  * How to handle exceptions : <li>If it is an {@link ApplicationException}, it
@@ -44,7 +45,7 @@ public class RestExceptionHandler {
 
 	@ResponseStatus(value = HttpStatus.FORBIDDEN)
 	@ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
-	public @ResponseBody ProblemDetail handleApplicationException(org.springframework.security.access.AccessDeniedException e) {
+	public @ResponseBody ProblemDetail handleApplicationException(AccessDeniedException e) {
 		
 		if (printErrorStackInRootLogger) classLogger.error(e.getMessage(),e);
 
