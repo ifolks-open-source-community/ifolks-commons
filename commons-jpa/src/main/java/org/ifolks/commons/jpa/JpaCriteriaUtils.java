@@ -19,14 +19,14 @@ public class JpaCriteriaUtils {
 	
 	public static Predicate getUnaccentuatedStringContainsRestriction(CriteriaBuilder builder, Expression<String> expression, String value) {	
 		if (!StringUtils.isEmpty(value)) {
-			return builder.like(builder.function("normalize", String.class, expression), "%" + StringUtils.normalize(value) + "%");
+			return builder.like(builder.function("unaccent", String.class, expression), "%" + StringUtils.unaccent(value) + "%");
 		}
 		return null;
 	}
 
 	public static void addUnaccentuatedStringContainsRestriction(CriteriaBuilder builder, List<Predicate> predicates, Expression<String> expression, String value) {	
 		if (!StringUtils.isEmpty(value)) {
-			predicates.add(builder.like(builder.function("normalize", String.class, expression), "%" + StringUtils.normalize(value) + "%"));
+			predicates.add(builder.like(builder.function("unaccent", String.class, expression), "%" + StringUtils.unaccent(value) + "%"));
 		}
 	}
 	

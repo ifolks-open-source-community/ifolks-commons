@@ -9,7 +9,7 @@ public class StringUtils {
 		return (str == null || "".equals(str));
 	}
 	
-	public static String normalize(String arg) {
+	public static String unaccent(String arg) {
 		if (arg == null) {
 			return null;
 		}
