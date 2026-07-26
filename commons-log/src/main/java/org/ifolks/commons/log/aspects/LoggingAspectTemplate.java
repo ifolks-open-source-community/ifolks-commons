@@ -6,10 +6,9 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.ifolks.commons.aop.AspectJUtils;
 import org.ifolks.commons.api.exception.ApplicationException;
-import org.ifolks.commons.log.AccessLogger;
-import org.ifolks.commons.log.ErrorLogger;
 import org.ifolks.commons.log.aspects.annotations.LoggingAspectPointcut;
-import org.ifolks.commons.text.StringUtils;
+import org.ifolks.commons.log.logger.AccessLogger;
+import org.ifolks.commons.log.logger.ErrorLogger;
 
 
 public abstract class LoggingAspectTemplate {
@@ -93,7 +92,13 @@ public abstract class LoggingAspectTemplate {
 	protected abstract void onPointcut();
 	
 
-	protected abstract Object getRequestBody(ProceedingJoinPoint joinPoint);
+	protected Object getRequestBody(ProceedingJoinPoint joinPoint) {
+		Object[] args = joinPoint.getArgs();
+		if (args == null || args.length == 0) {
+			return null;
+		}
+		return args.length == 1 ? args[0] : args;
+	}
 	
 	
 	protected boolean traceRequestBody(Method proxiedMethod) {
@@ -129,7 +134,7 @@ public abstract class LoggingAspectTemplate {
 			result = proxiedMethod.getAnnotation(LoggingAspectPointcut.class).value();
 		}
 		
-		if (StringUtils.isEmpty(result)) {
+		if (result == null || result.isEmpty()) {
 			return getFallbackTransactionType(proxiedMethod);
 		}
 		return result;

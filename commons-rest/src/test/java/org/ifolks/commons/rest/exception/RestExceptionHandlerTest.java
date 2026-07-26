@@ -1,10 +1,10 @@
 package org.ifolks.commons.rest.exception;
 
 import org.ifolks.commons.api.exception.ApplicationException;
-import org.springframework.http.ProblemDetail;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.ProblemDetail;
 
 public class RestExceptionHandlerTest {
 

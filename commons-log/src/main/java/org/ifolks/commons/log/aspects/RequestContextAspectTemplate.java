@@ -8,7 +8,6 @@ import org.aspectj.lang.annotation.Around;
 import org.ifolks.commons.log.context.RequestChannels;
 import org.ifolks.commons.log.context.RequestContext;
 import org.ifolks.commons.log.context.RequestContextHolder;
-import org.ifolks.commons.text.StringUtils;
 
 public abstract class RequestContextAspectTemplate {
 	
@@ -26,7 +25,7 @@ public abstract class RequestContextAspectTemplate {
 		String transactionId = UUID.randomUUID().toString();
 		
 		String correlationId = getCorrelationId(joinPoint);
-		if (StringUtils.isEmpty(correlationId)) {
+		if (correlationId == null || correlationId.isEmpty()) {
 			correlationId = transactionId;
 		}
 		

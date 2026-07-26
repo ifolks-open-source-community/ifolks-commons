@@ -18,8 +18,7 @@
 	</parent>
 
 	<modules>
-		<module>commons-text</module>
-		<module>commons-entities</module>
+		<module>commons-jpa</module>
 		<module>commons-api</module>
 		<module>commons-aop</module>
 		<module>commons-log</module>
@@ -76,13 +75,7 @@
 			
 			<dependency>
 				<groupId>org.ifolks.commons</groupId>
-				<artifactId>commons-text</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			
-			<dependency>
-				<groupId>org.ifolks.commons</groupId>
-				<artifactId>commons-entities</artifactId>
+				<artifactId>commons-jpa</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
