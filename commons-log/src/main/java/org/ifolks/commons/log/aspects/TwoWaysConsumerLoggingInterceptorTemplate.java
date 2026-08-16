@@ -76,9 +76,42 @@ public abstract class TwoWaysConsumerLoggingInterceptorTemplate {
 			throw e;
 		} catch (Exception e) {
 			elapsedTime = System.currentTimeMillis() - start;
-			accessLogger.logInterfaceAnswer(transactionType, interfaceChannel, responseBody, elapsedTime, "500", e.getMessage());
+			if (isAccessDeniedException(e)) {
+				accessLogger.logInterfaceAnswer(transactionType, interfaceChannel, responseBody, elapsedTime, "403", "access.denied");
+			} else if (isAuthenticationException(e)) {
+				accessLogger.logInterfaceAnswer(transactionType, interfaceChannel, responseBody, elapsedTime, "401", "unauthorized");
+			} else {
+				accessLogger.logInterfaceAnswer(transactionType, interfaceChannel, responseBody, elapsedTime, "500", e.getMessage());
+			}
 			throw e;
 		}
+	}
+	
+	protected boolean isAccessDeniedException(Throwable e) {
+		if (e == null) return false;
+		Class<?> clazz = e.getClass();
+		while (clazz != null && clazz != Object.class) {
+			String name = clazz.getName();
+			if ("org.springframework.security.access.AccessDeniedException".equals(name) ||
+				"org.springframework.security.authorization.AuthorizationDeniedException".equals(name)) {
+				return true;
+			}
+			clazz = clazz.getSuperclass();
+		}
+		return false;
+	}
+
+	protected boolean isAuthenticationException(Throwable e) {
+		if (e == null) return false;
+		Class<?> clazz = e.getClass();
+		while (clazz != null && clazz != Object.class) {
+			String name = clazz.getName();
+			if ("org.springframework.security.core.AuthenticationException".equals(name)) {
+				return true;
+			}
+			clazz = clazz.getSuperclass();
+		}
+		return false;
 	}
 	
 	
