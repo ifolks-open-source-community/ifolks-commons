@@ -39,9 +39,9 @@ public class RestExceptionHandlerTest {
 		
 		ProblemDetail problemDetail = restExceptionHandler.handleApplicationException(e);
 		
-		Assertions.assertEquals(HttpStatus.NOT_FOUND.value(), problemDetail.getStatus());
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), problemDetail.getStatus());
 		Assertions.assertEquals(message, problemDetail.getDetail());
-		Assertions.assertEquals("404", e.getHttpErrorCode());
+		Assertions.assertEquals("400", e.getHttpErrorCode());
 	}
 
 	@Test
