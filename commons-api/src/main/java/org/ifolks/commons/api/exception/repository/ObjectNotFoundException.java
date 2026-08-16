@@ -27,6 +27,6 @@ public class ObjectNotFoundException extends ApplicationException {
 	
 	@Override
 	public String getHttpErrorCode() {
-		return "404";
+		return "400";
 	}
 }

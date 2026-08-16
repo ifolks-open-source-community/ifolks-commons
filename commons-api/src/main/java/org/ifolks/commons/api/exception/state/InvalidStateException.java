@@ -19,4 +19,9 @@ public class InvalidStateException extends ApplicationException {
 	public InvalidStateException(String message, Throwable cause) {
 		super(message, cause);
 	}
+
+	@Override
+	public String getHttpErrorCode() {
+		return "409";
+	}
 }

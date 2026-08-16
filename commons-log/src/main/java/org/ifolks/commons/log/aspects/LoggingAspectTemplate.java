@@ -72,15 +72,45 @@ public abstract class LoggingAspectTemplate {
 			throw e;
 		} catch (Exception e) {
 			elapsedTime = System.currentTimeMillis() - start;
-			if ("org.springframework.security.access.AccessDeniedException".equals(e.getClass().getName())) {
+			if (isAccessDeniedException(e)) {
 				accessLogger.logResponse(transactionType, null, elapsedTime, "403", "access.denied");
 				errorLogger.logException(e, "403", "access.denied");
+			} else if (isAuthenticationException(e)) {
+				accessLogger.logResponse(transactionType, null, elapsedTime, "401", "unauthorized");
+				errorLogger.logException(e, "401", "unauthorized");
 			} else {
 				accessLogger.logResponse(transactionType, null, elapsedTime, "500", e.getMessage());
 				errorLogger.logException(e);
 			}
 			throw e;
 		}
+	}
+	
+	protected boolean isAccessDeniedException(Throwable e) {
+		if (e == null) return false;
+		Class<?> clazz = e.getClass();
+		while (clazz != null && clazz != Object.class) {
+			String name = clazz.getName();
+			if ("org.springframework.security.access.AccessDeniedException".equals(name) ||
+				"org.springframework.security.authorization.AuthorizationDeniedException".equals(name)) {
+				return true;
+			}
+			clazz = clazz.getSuperclass();
+		}
+		return false;
+	}
+
+	protected boolean isAuthenticationException(Throwable e) {
+		if (e == null) return false;
+		Class<?> clazz = e.getClass();
+		while (clazz != null && clazz != Object.class) {
+			String name = clazz.getName();
+			if ("org.springframework.security.core.AuthenticationException".equals(name)) {
+				return true;
+			}
+			clazz = clazz.getSuperclass();
+		}
+		return false;
 	}
 	
 	
