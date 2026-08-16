@@ -52,13 +52,13 @@ public class RestExceptionHandler {
 		return createProblemDetail(HttpStatus.FORBIDDEN, "access.denied", "AccessDeniedException");
 	}
 	
-	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public @ResponseBody ProblemDetail handleApplicationException(ObjectNotFoundException e) {
 		
 		if (printErrorStackInRootLogger) classLogger.error(e.getMessage(),e);
 
-		return createProblemDetail(HttpStatus.BAD_REQUEST, e.getMessage(), e.getClass().getName());
+		return createProblemDetail(HttpStatus.NOT_FOUND, e.getMessage(), e.getClass().getName());
 	}
 
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
