@@ -11,11 +11,6 @@
 
 	<packaging>pom</packaging>
 	
-	<parent>
-	    <groupId>org.springframework.boot</groupId>
-	    <artifactId>spring-boot-starter-parent</artifactId>
-	    <version>4.0.6</version>
-	</parent>
 
 	<modules>
 		<module>commons-jpa</module>
@@ -62,11 +57,21 @@
 		<java.version>21</java.version>
 		<maven.compiler.release.version>21</maven.compiler.release.version>
 		
+		<spring-boot.version>4.0.6</spring-boot.version>
 		<commons.codec.version>1.9</commons.codec.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- Spring Boot BOM -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
 			<dependency>
 				<groupId>org.ifolks.commons</groupId>
 				<artifactId>commons-api</artifactId>
@@ -107,6 +112,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.13.0</version>
 				<configuration>
 					<verbose>true</verbose>
 					<fork>true</fork>
@@ -117,6 +123,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>3.3.1</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
