@@ -57,8 +57,7 @@
 		<java.version>21</java.version>
 		<maven.compiler.release.version>21</maven.compiler.release.version>
 		
-		<spring-boot.version>4.0.6</spring-boot.version>
-		<commons.codec.version>1.9</commons.codec.version>
+		<spring-boot.version>4.1.1</spring-boot.version>
 	</properties>
 
 	<dependencyManagement>
@@ -96,14 +95,6 @@
 				<artifactId>commons-log</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			
-			<!-- commons -->
-			<dependency>
-				<groupId>commons-codec</groupId>
-				<artifactId>commons-codec</artifactId>
-				<version>${commons.codec.version}</version>
-			</dependency>
-			
 		</dependencies>
 	</dependencyManagement>
 
