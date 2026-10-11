@@ -5,7 +5,7 @@
 <h1 align="center">iFolks Commons</h1>
 
 <p align="center">
-  <a href="https://commons.ifolks.org"><img src="https://img.shields.io/badge/Documentation-commons.ifolks.org-blue.svg" alt="Documentation" /></a>
+  <a href="https://ifolks-org.atlassian.net/wiki/spaces/COMMONS/overview"><img src="https://img.shields.io/badge/Documentation-commons.ifolks.org-blue.svg" alt="Documentation" /></a>
   <img src="https://img.shields.io/badge/Java-21-orange.svg" alt="Java 21" />
   <img src="https://img.shields.io/badge/Spring%20Boot-4.x-brightgreen.svg" alt="Spring Boot 4.x" />
   <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License" />
@@ -21,11 +21,11 @@
 
 To avoid documentation drift, complete architecture manuals, structured JSON schemas, and configuration guides are maintained on our official portal:
 
-👉 **[https://commons.ifolks.org](https://commons.ifolks.org)**
+👉 **[commons.ifolks.org](https://ifolks-org.atlassian.net/wiki/spaces/COMMONS/overview)**
 
-* 📖 **[User Guide](https://commons.ifolks.org)**: Dual-channel logging (`ACCESS_LOG`, `ERROR_LOG`), distributed tracing & MDC propagation, GDPR data redaction (`@SensitiveData`), and `logback-spring.xml` setups.
-* 🛠 **[Developer Guide](https://commons.ifolks.org)**: Multi-module breakdown, AOP Template Method patterns, aspect execution ordering (`@Order(0)` vs `@Order(2)`), and Jackson 3 serialization internals.
-* 📦 **[Releases & Changelogs](https://commons.ifolks.org)**: Detailed version history and upgrade notes.
+* 📖 **[User Guide](https://ifolks-org.atlassian.net/wiki/spaces/COMMONS/pages/1898086405/User+guide)**: Dual-channel logging (`ACCESS_LOG`, `ERROR_LOG`), distributed tracing & MDC propagation, GDPR data redaction (`@SensitiveData`), and `logback-spring.xml` setups.
+* 🛠 **[Developer Guide](https://ifolks-org.atlassian.net/wiki/spaces/COMMONS/pages/1898184722/Developer+guide)**: Multi-module breakdown, AOP Template Method patterns, aspect execution ordering (`@Order(0)` vs `@Order(2)`), and Jackson 3 serialization internals.
+* 📦 **[Releases & Changelogs](https://ifolks-org.atlassian.net/wiki/spaces/COMMONS/pages/1893007361/Releases)**: Detailed version history and upgrade notes.
 
 ---
 
